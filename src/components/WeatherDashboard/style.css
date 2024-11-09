@@ -1,0 +1,111 @@
+h1 {
+    margin: 0;
+}
+
+.weatherDashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    gap: 80px;
+    color: black;
+}
+
+.weatherInput {
+    color: black;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weatherBoard {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.weatherCard {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px 30px;
+    border-radius: 0px 20px;
+    width: 260px;
+    word-break: break-all;
+}
+
+.weatherCard:nth-child(2) {
+    text-align: left;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+form input {
+    height: 40px;
+    width: 200px;
+    justify-content: center;
+}
+
+button {
+    height: 40px;
+}
+
+.deleteBtn {
+    margin-top: 20px;
+}
+
+.inputField {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    width: 20rem;
+}
+
+.error {
+    color: red;
+    text-align: left;
+}
+
+.inputError {
+    width: 20rem;
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
+.inputErrorMessage {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.inputHelpers {
+    margin-top: 10px;
+    min-height: 30px;
+}
+
+.weatherDisplay {
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .weatherBoard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .inputField {
+        border-bottom: 1px solid black;
+        width: 12rem;
+    }
+}
