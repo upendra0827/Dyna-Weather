@@ -5,9 +5,9 @@ const WeatherCard = ({
   existingCities,
 }: {
   cityData: any;
-  handleRemoveCity: () => void;
+  handleRemoveCity: any;
   originalName: string;
-  existingCities: string;
+  existingCities: any;
 }) => {
   const { weather, main, visibility, wind, clouds, sys } = cityData;
 

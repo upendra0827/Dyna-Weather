@@ -8,9 +8,9 @@ interface ErrorBoundaryProps {
 const ErrorBoundary: React.FunctionComponent<ErrorBoundaryProps> = ({
   children,
 }) => {
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState(null);
 
-  const handleError = (error: ErrorEvent) => {
+  const handleError = (error: any) => {
     setError(error);
   };
 

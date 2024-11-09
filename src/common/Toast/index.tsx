@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 
 interface ToastMessage {
-  type: "info" | "warning" | "error" | "";
+  type: "info" | "warning" | "error" | string;
   message: string;
 }
 

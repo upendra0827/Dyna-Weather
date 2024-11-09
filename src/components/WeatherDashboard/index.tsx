@@ -16,7 +16,7 @@ interface Error {
 }
 
 interface ToastMessage {
-  type: "info" | "warning" | "error" | "";
+  type: "info" | "warning" | "error" | string;
   message: string;
 }
 
@@ -31,7 +31,7 @@ const WeatherDashboard: React.FC = () => {
   } = useFetchWeather();
   const { weatherData } = useWeatherSelector();
   const { handleRemoveCity } = useWeatherDispatch();
-  const [toastMessage, setToastMessage] = useState<ToastMessage | null>({
+  const [toastMessage, setToastMessage] = useState<ToastMessage>({
     type: "",
     message: "",
   });
@@ -115,7 +115,7 @@ const WeatherDashboard: React.FC = () => {
           handleClearErrorMessage={handleClearErrorMessage}
         />
         <div className="weatherBoard">
-          {weatherData.map(([city, name], index: number) => {
+          {weatherData.map(([city, name]: [any, any], index: number) => {
             return (
               <WeatherCard
                 originalName={name}

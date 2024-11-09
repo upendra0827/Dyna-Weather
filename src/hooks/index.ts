@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FETCH_CITY_WEATHER_API } from "../utils/constants";
 import { addCity, removeCity } from "../store/slices/weatherSlice";
 import { VITE_API_KEY } from "../utils/constants";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 interface WeatherResponse {
   name: string;
@@ -35,7 +35,7 @@ export const useWeatherDispatch = () => {
     cityName,
   }: {
     name: string;
-    existingCities: () => void;
+    existingCities: any;
     cityName: string;
   }) => {
     existingCities.current.delete(name);
@@ -51,7 +51,7 @@ export const useWeatherDispatch = () => {
 
 export const useWeatherSelector = () => {
   const weatherData = useSelector(
-    (state: { weather: { data: WeatherResponse[] } }) => state.weather.data
+    (state: { weather: { data: any } }) => state.weather.data
   );
   return { weatherData };
 };
@@ -111,7 +111,7 @@ export const useFetchWeather = () => {
         existingCities.current.add(city);
         setIsFetched(true);
       } catch (error) {
-        const parsedError = JSON.parse(error.message);
+        const parsedError = JSON.parse((error as any).message);
         setError(parsedError);
       } finally {
         setIsFetching(false);
