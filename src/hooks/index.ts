@@ -100,6 +100,8 @@ export const useFetchWeather = () => {
 
         if (!handleCheckDuplicates({ city: responseJson.name })) {
           handleAddCity({ response: responseJson, cityName: city });
+          existingCities.current.add(responseJson.name);
+          existingCities.current.add(city);
         } else {
           setError({
             cod: "404",
@@ -107,8 +109,6 @@ export const useFetchWeather = () => {
           });
         }
 
-        existingCities.current.add(responseJson.name);
-        existingCities.current.add(city);
         setIsFetched(true);
       } catch (error) {
         const parsedError = JSON.parse((error as any).message);
