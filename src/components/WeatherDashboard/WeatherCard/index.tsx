@@ -30,7 +30,7 @@ const WeatherCard = ({
   return (
     <div className="weatherCard">
       <h2>
-        {cityData.name !== originalName
+        {cityData.name.toLowerCase() !== originalName.toLowerCase()
           ? `${cityData.name}(${originalName})`
           : cityData.name}
       </h2>
