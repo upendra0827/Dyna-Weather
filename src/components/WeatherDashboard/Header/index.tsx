@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 
 interface HeaderProps {
-  handleSearch: (e: any) => void;
+  handleSearch: (e: React.ChangeEvent<HTMLFormElement>) => void;
   setSearchedCity: React.Dispatch<React.SetStateAction<string>>;
   searchedCity: string;
   errorMessage: string;

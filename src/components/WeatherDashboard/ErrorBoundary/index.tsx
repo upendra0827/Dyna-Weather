@@ -8,23 +8,31 @@ interface ErrorBoundaryProps {
 const ErrorBoundary: React.FunctionComponent<ErrorBoundaryProps> = ({
   children,
 }) => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
-  const handleError = (error: any) => {
-    setError(error);
+  const handleError = (error: ErrorEvent) => {
+    setError(error.error);
+  };
+
+  const handleRejection = (event: PromiseRejectionEvent) => {
+    setError(new Error(`Unhandled promise rejection: ${event.reason}`));
   };
 
   useEffect(() => {
     window.addEventListener("error", handleError);
+    window.addEventListener("unhandledrejection", handleRejection);
 
     return () => {
       window.removeEventListener("error", handleError);
+      window.removeEventListener("unhandledrejection", handleRejection);
     };
   }, []);
 
   return error ? (
     <div className="errorBoundary">
-      Something Went wrong on our side, please try again after sometime
+      <div>
+        Something Went wrong on our side, please try again after sometime
+      </div>
     </div>
   ) : (
     <> {children}</>

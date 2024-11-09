@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { WeatherDataType } from "../../utils/constants";
 
 interface WeatherState {
-  data: [any, string][];
+  data: [WeatherDataType, string][];
   error: string;
 }
 
 interface AddCityPayload {
-  response: any;
+  response: WeatherDataType;
   cityName: string;
 }
 

@@ -3,22 +3,10 @@ import { FETCH_CITY_WEATHER_API } from "../utils/constants";
 import { addCity, removeCity } from "../store/slices/weatherSlice";
 import { VITE_API_KEY } from "../utils/constants";
 import { useRef, useState } from "react";
-
-interface WeatherResponse {
-  name: string;
-  main: {
-    temp: number;
-    humidity: number;
-    pressure: number;
-  };
-  weather: Array<{
-    description: string;
-    icon: string;
-  }>;
-}
+import { WeatherDataType } from "../utils/constants";
 
 interface CityPayload {
-  response: WeatherResponse;
+  response: WeatherDataType;
   cityName: string;
 }
 
@@ -35,7 +23,7 @@ export const useWeatherDispatch = () => {
     cityName,
   }: {
     name: string;
-    existingCities: any;
+    existingCities: React.MutableRefObject<Set<string>>;
     cityName: string;
   }) => {
     existingCities.current.delete(name);
@@ -51,13 +39,13 @@ export const useWeatherDispatch = () => {
 
 export const useWeatherSelector = () => {
   const weatherData = useSelector(
-    (state: { weather: { data: any } }) => state.weather.data
+    (state: { weather: { data: WeatherDataType } }) => state.weather.data
   );
   return { weatherData };
 };
 
 export const useFetchWeather = () => {
-  const existingCities = useRef(new Set());
+  const existingCities = useRef<Set<string>>(new Set());
   const [isFetching, setIsFetching] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [error, setError] = useState({

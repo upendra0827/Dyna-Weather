@@ -9,11 +9,8 @@ import WeatherCard from "./WeatherCard";
 import ErrorBoundary from "./ErrorBoundary";
 import "./style.css";
 import Toast from "../../common/Toast";
-
-interface Error {
-  cod: string;
-  message: string;
-}
+import { WeatherDataType } from "../../utils/constants";
+import { errorMessagesObjFn } from "../../utils/constants";
 
 interface ToastMessage {
   type: "info" | "warning" | "error" | string;
@@ -35,63 +32,23 @@ const WeatherDashboard: React.FC = () => {
     type: "",
     message: "",
   });
-
   const [searchedCity, setSearchedCity] = useState<string>("");
-
-  const errorMessagesObjFn = ({
-    cod,
-    message,
-  }: Error): { type: string; message: string } => {
-    const val = searchedCity;
-    if (!cod) {
-      return {
-        type: "info",
-        message: "Please check the city name and try again.",
-      };
-    }
-
-    if (cod === "404") {
-      if (message === "Already exists") {
-        return {
-          type: "warning",
-          message: `${val}'s weather report already exists in the dashboard.`,
-        };
-      } else if (message === "city not found") {
-        return {
-          type: "error",
-          message: `The city '${val}' could not be found. Please make sure the city name is correct and try again.`,
-        };
-      } else if (message === "Internal error") {
-        return {
-          type: "error",
-          message:
-            "Oops! Something went wrong on our end. Please try again later.",
-        };
-      }
-    }
-
-    return {
-      type: "error",
-      message:
-        "We encountered an unexpected issue. Please try again after a moment.",
-    };
-  };
 
   useEffect(() => {
     if (error.cod === "404") {
-      setToastMessage(errorMessagesObjFn(error));
+      setToastMessage(errorMessagesObjFn({ ...error, searchedCity }));
     }
   }, [error]);
+
+  useEffect(() => {
+    if (isFetched) setSearchedCity("");
+  }, [isFetched]);
 
   const handleSearch = (e: React.FormEvent) => {
     const cityName = searchedCity.replace(/\s+/g, " ").trim();
     e.preventDefault();
     fetchWeather({ city: cityName });
   };
-
-  useEffect(() => {
-    if (isFetched) setSearchedCity("");
-  }, [isFetched]);
 
   const handleToastClose = () => {
     handleClearErrorMessage();
@@ -109,23 +66,25 @@ const WeatherDashboard: React.FC = () => {
           setSearchedCity={setSearchedCity}
           errorMessage={
             error.message !== "Already exists" && error.message != ""
-              ? errorMessagesObjFn(error).message
+              ? errorMessagesObjFn({ ...error, searchedCity }).message
               : ""
           }
           handleClearErrorMessage={handleClearErrorMessage}
         />
         <div className="weatherBoard">
-          {weatherData.map(([city, name]: [any, any], index: number) => {
-            return (
-              <WeatherCard
-                originalName={name}
-                key={`${city.name}-${index}`}
-                cityData={city}
-                handleRemoveCity={handleRemoveCity}
-                existingCities={existingCities}
-              />
-            );
-          })}
+          {weatherData.map(
+            ([city, name]: [WeatherDataType, string], index: number) => {
+              return (
+                <WeatherCard
+                  originalName={name}
+                  key={`${city.name}-${index}`}
+                  cityData={city}
+                  handleRemoveCity={handleRemoveCity}
+                  existingCities={existingCities}
+                />
+              );
+            }
+          )}
         </div>
       </div>
       {error.cod === "404" && (

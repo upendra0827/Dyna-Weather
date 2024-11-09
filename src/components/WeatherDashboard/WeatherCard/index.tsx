@@ -1,14 +1,26 @@
+import { WeatherDataType } from "../../../utils/constants";
+
+interface WeatherCardType {
+  cityData: WeatherDataType;
+  handleRemoveCity: ({
+    name,
+    existingCities,
+    cityName,
+  }: {
+    name: string;
+    existingCities: React.MutableRefObject<Set<string>>;
+    cityName: string;
+  }) => void;
+  originalName: string;
+  existingCities: React.MutableRefObject<Set<string>>;
+}
+
 const WeatherCard = ({
   cityData,
   handleRemoveCity,
   originalName,
   existingCities,
-}: {
-  cityData: any;
-  handleRemoveCity: any;
-  originalName: string;
-  existingCities: any;
-}) => {
+}: WeatherCardType) => {
   const { weather, main, visibility, wind, clouds, sys } = cityData;
 
   const weatherInfo = weather[0];

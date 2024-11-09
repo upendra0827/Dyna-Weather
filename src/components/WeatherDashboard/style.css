@@ -25,6 +25,7 @@ h1 {
     gap: 40px;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 0 40px 0 40px;
 }
 
 .weatherCard {
@@ -98,10 +99,15 @@ button {
 }
 
 @media (max-width: 768px) {
+    .weatherDashboard {
+        margin-top: 20px;
+    }
+
     .weatherBoard {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        padding: 0;
     }
 
     .inputField {
